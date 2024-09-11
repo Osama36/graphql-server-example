@@ -17,8 +17,11 @@ const resolvers = {
     author(root, args) {
       return db.authors.find(author => author.id === args.id)
     },
-    reviews() {
-      return db.reviews
+    reviews(root, { verified }) {
+      return !verified ? db.reviews : db.reviews.filter(
+        review =>
+          db.authors.find(author => author.id === review.author_id).verified
+      )
     },
     review(root, args) {
       return db.reviews.find(review => review.id === args.id)
@@ -26,17 +29,14 @@ const resolvers = {
 
   },
   Game: {
-    reviews(game) {
+    reviews(game, args) {
       return db.reviews.filter(review => review.game_id === game.id)
     },
 
   },
   Author: {
     reviews(author, args) {
-
       return db.reviews.filter(review => review.author_id === author.id)
-
-
     },
   },
   Review: {

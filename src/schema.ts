@@ -23,7 +23,7 @@ export const typeDefs = `#graphql
     type Query {
         games: [Game]
         game(id: ID!): Game
-        reviews(verified: Boolean): [Review]
+        reviews (verified: Boolean): [Review]
         review(id: ID!): Review,
         authors: [Author]
         author(id: ID!): Author
